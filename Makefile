@@ -53,7 +53,7 @@ run:
 	@node app.js
 
 start: install build
-	@NODE_ENV=production ./node_modules/.bin/pm2 start app.js -i 0 --name "cnode" --max-memory-restart 400M
+	@NODE_ENV=production ./node_modules/.bin/pm2 start app.js -i 0 --name "cnode" --max-memory-restart 400M --merge-logs    --log-date-format="YYYY-MM-DD HH:mm Z" -o /data/nodeclub_log/nodeclub.out.log -e /data/nodeclub_log/nodeclub.error.log
 
 restart: install build
 	@NODE_ENV=production ./node_modules/.bin/pm2 restart "cnode"
