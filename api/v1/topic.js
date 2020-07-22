@@ -78,6 +78,10 @@ var show = function (req, res, next) {
       res.status(404);
       return res.send({success: false, error_msg: '话题不存在'});
     }
+    
+    topic.visit_count += 1;
+    topic.save();
+
     topic = _.pick(topic, ['id', 'author_id', 'tab', 'content', 'title', 'last_reply_at',
       'good', 'top', 'reply_count', 'visit_count', 'create_at', 'author']);
 
@@ -94,7 +98,7 @@ var show = function (req, res, next) {
       reply =  _.pick(reply, ['id', 'author', 'content', 'ups', 'create_at', 'reply_id']);
       reply.reply_id = reply.reply_id || null;
 
-      if (reply.ups && req.user && reply.ups.indexOf(req.user.id) != -1) {
+      if (reply.ups && req.user && reply.ups.indexOf(req.user._id) != -1) {
         reply.is_uped = true;
       } else {
         reply.is_uped = false;
